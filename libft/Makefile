@@ -1,5 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I. -L.
+CFLAGS = -I. -L.
+#CFLAGS = -Wall -Wextra -Werror -I. -L.
 LIB_FLAGS = -lft -lbsd
 
 all:
@@ -16,4 +17,9 @@ real:
 debug:
 	$(CC) $(CFLAGS) -D DEBUG=1 main.c $(LIB_FLAGS) -o main
 	@-./main
+	@rm -f main
+
+mem:
+	$(CC) $(CFLAGS) -D DEBUG=1 main.c $(LIB_FLAGS) -o main
+	@-valgrind --leak-check=full ./main
 	@rm -f main

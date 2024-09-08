@@ -260,6 +260,8 @@ void	test_strlcat(void)
 			strncmp(s, "abcabc", 6) == 0);
 }
 
+#include <stdlib.h>
+#include <limits.h>
 int	main(void)
 {
 	test_isalpha();
@@ -274,4 +276,5 @@ int	main(void)
 	//test_memmove();
 	//test_strlcpy();
 	//test_strlcat();
+	//malloc(INT_MAX + 2); 
 }
