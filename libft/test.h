@@ -4,7 +4,6 @@
 # include <ctype.h>
 # include <stdio.h>
 # include <string.h>
-# include <bsd/string.h>
 
 # include "libft.h"
 
@@ -34,10 +33,10 @@
 # define ASSERT(test) do { \
 	if (test) { \
 		if (DEBUG) { \
-			printf(COLOR_GREEN "PASSED: %s\n" COLOR_RESET, #test); \
+			printf(COLOR_GREEN "PASSED: %s" COLOR_RESET "\n", #test); \
 		} \
 	} else { \
-		dprintf(2, COLOR_RED "FAILED: %s\n" COLOR_RESET, #test); \
+		dprintf(2, COLOR_RED "FAILED: %s" COLOR_RESET "\n", #test); \
 	} \
 } while (0)
 

@@ -210,21 +210,29 @@ void	test_strlen(void)
 
 void	test_memset(void)
 {
+	char	s[50];
+
 	printf("TEST: memset\n");
-	ASSERT(strncmp(ft_memset((char[]){'a','b','c',0}, 'a', 3), "aaa", 3) == 0);
-	ASSERT(strncmp(ft_memset((char[]){'a','b','c','d','e',0}, 'a', 3), "aaade", 5) == 0);
-	ASSERT(strncmp(ft_memset((char[]){'a','b','c','d','e',0}, 'a', 1), "abcde", 5) == 0);
+	ASSERT(memcmp(ft_memset(strcpy(s, "abc"), 'a', 3), "aaa", 3) == 0);
+	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 3), "aaade", 5) == 0);
+	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 1), "abcde", 5) == 0);
+	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 5), "aaaaa", 5) == 0);
 
 	// memset size cannot be 0, get warning memset-transposed-args
-	// ASSERT(strncmp(ft_memset((char[]){'a','b','c','d','e',0}, 'a', 0), "abcde", 5) == 0);
+	#ifndef LIBC
+		ASSERT(strncmp(ft_memset(strcpy(s, "abcde"), 'a', 0), "abcde", 5) == 0);
+	#endif
+
 }
 
 void	test_bzero(void)
 {
-	char	*s;
+	char	s[50];
 
 	printf("TEST: bzero\n");
-	ASSERT(strncmp((s=(char[]){'a','b','c', 0}, ft_bzero(s, 3), s), "\0\0\0", 3) == 0);
+	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 0), s), "abc", 3) == 0);
+	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 3), s), "\0\0\0", 3) == 0);
+	ASSERT(memcmp((strcpy(s, "abcde"), ft_bzero(s, 3), s), "\0\0\0de", 5) == 0);
 }
 
 void	test_memcpy(void)
@@ -232,7 +240,10 @@ void	test_memcpy(void)
 	char s[50];
 
 	printf("TEST: memcpy\n");
-	ASSERT(strncmp(ft_memcpy(s, "abc", 3), "abc", 3) == 0);
+	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 0), "abc", 3) == 0);
+	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 1), "1bc", 3) == 0);
+	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 2), "12c", 3) == 0);
+	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 3), "123", 3) == 0);
 }
 
 void	test_memmove(void)
@@ -240,7 +251,7 @@ void	test_memmove(void)
 	char s[50];
 
 	printf("TEST: memmove\n");
-	ASSERT(strncmp(ft_memmove(s, "abc", 3), "abc", 3) == 0);
+	ASSERT(memcmp(ft_memmove(s, "abc", 3), "abc", 3) == 0);
 }
 
 void	test_strlcpy(void)
@@ -260,8 +271,6 @@ void	test_strlcat(void)
 			strncmp(s, "abcabc", 6) == 0);
 }
 
-#include <stdlib.h>
-#include <limits.h>
 int	main(void)
 {
 	test_isalpha();
@@ -271,10 +280,9 @@ int	main(void)
 	test_isprint();
 	test_strlen();
 	test_memset();
-	//test_bzero();
-	//test_memcpy();
+	test_bzero();
+	test_memcpy();
 	//test_memmove();
 	//test_strlcpy();
 	//test_strlcat();
-	//malloc(INT_MAX + 2); 
 }

@@ -1,13 +1,12 @@
 CC = cc
-CFLAGS = -I. -L.
-#CFLAGS = -Wall -Wextra -Werror -I. -L.
-LIB_FLAGS = -lft -lbsd
+CFLAGS = -Wall -Wextra -Werror -I. -L.
+LIB_FLAGS = -lft
+#LIB_FLAGS = -lft -lbsd
 
 all:
 	$(CC) $(CFLAGS) main.c $(LIB_FLAGS) -o main
 	@-./main
 	@rm -f main
-
 
 real:
 	$(CC) $(CFLAGS) -D LIBC main.c $(LIB_FLAGS) -o main
