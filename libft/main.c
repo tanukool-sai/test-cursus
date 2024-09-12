@@ -1,5 +1,7 @@
 #include "test.h"
 
+char	s[50];
+
 void	test_isalpha(void)
 {
 	printf("TEST: isalpha\n");
@@ -210,8 +212,6 @@ void	test_strlen(void)
 
 void	test_memset(void)
 {
-	char	s[50];
-
 	printf("TEST: memset\n");
 	ASSERT(memcmp(ft_memset(strcpy(s, "abc"), 'a', 3), "aaa", 3) == 0);
 	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 3), "aaade", 5) == 0);
@@ -227,8 +227,6 @@ void	test_memset(void)
 
 void	test_bzero(void)
 {
-	char	s[50];
-
 	printf("TEST: bzero\n");
 	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 0), s), "abc", 3) == 0);
 	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 3), s), "\0\0\0", 3) == 0);
@@ -237,8 +235,6 @@ void	test_bzero(void)
 
 void	test_memcpy(void)
 {
-	char s[50];
-
 	printf("TEST: memcpy\n");
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 0), "abc", 3) == 0);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 1), "1bc", 3) == 0);
@@ -248,27 +244,63 @@ void	test_memcpy(void)
 
 void	test_memmove(void)
 {
-	char s[50];
-
 	printf("TEST: memmove\n");
-	ASSERT(memcmp(ft_memmove(s, "abc", 3), "abc", 3) == 0);
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde"), s + 2, 0), "abcde", 5) == 0);
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde") + 2, s, 0) - 2, "abcde", 5) == 0);
+
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde"), s + 2, 1), "cbcde", 5) == 0);
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde") + 2, s, 1) - 2, "abade", 5) == 0);
+
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde"), s + 2, 2), "cdcde", 5) == 0);
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde") + 2, s, 2) - 2, "ababe", 5) == 0);
+
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde") + 2, s, 3) - 2, "ababc", 5) == 0);
+	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde"), s + 2, 3), "cdede", 5) == 0);
 }
 
 void	test_strlcpy(void)
 {
-	char s[50];
-
 	printf("TEST: strlcpy\n");
-	ASSERT(ft_strlcpy(s, "abc", 4) == 3 && strncmp(s, "abc", 3) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 0) == 0 && memcmp(s, "abc", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 1) == 0 && memcmp(s, "\0bc", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 2) == 0 && memcmp(s, "\0bc", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 3) == 0 && memcmp(s, "\0bc", 4) == 0);
+
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "123", 0) == 3 && memcmp(s, "abc", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "123", 1) == 3 && memcmp(s, "\0bc", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "123", 2) == 3 && memcmp(s, "1\0c", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "1234", 3) == 4 && memcmp(s, "12\0", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "1234", 4) == 4 && memcmp(s, "123", 4) == 0);
+	ASSERT(ft_strlcpy(strcpy(s, "abc"), "1234", 5) == 4 && memcmp(s, "1234", 5) == 0);
 }
 
 void	test_strlcat(void)
 {
-	char	*s;
-
 	printf("TEST: strlcat\n");
-	ASSERT(ft_strlcat((s=(char[7]){'a','b','c',0}), "abc", 7) == 6 && \
-			strncmp(s, "abcabc", 6) == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "", 0) == 0 && strcmp(s, "") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "", 1) == 0 && strcmp(s, "") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "", 2) == 0 && strcmp(s, "") == 0);
+
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "", 0) == 0 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "", 1) == 1 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "", 2) == 2 && strcmp(s, "abc") == 0);
+
+	ASSERT(ft_strlcat(strcpy(s, ""), "abc", 0) == 3 && strcmp(s, "") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "abc", 1) == 3 && strcmp(s, "") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "abc", 2) == 3 && strcmp(s, "a") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "abc", 3) == 3 && strcmp(s, "ab") == 0);
+	ASSERT(ft_strlcat(strcpy(s, ""), "abc", 4) == 3 && strcmp(s, "abc") == 0);
+
+ 	// Return value = min(len(dst), dstsize) + len(src)
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 0) == 4 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 1) == 5 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 2) == 6 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 3) == 7 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 4) == 7 && strcmp(s, "abc") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 5) == 7 && strcmp(s, "abc1") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 6) == 7 && strcmp(s, "abc12") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 7) == 7 && strcmp(s, "abc123") == 0);
+	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 8) == 7 && strcmp(s, "abc1234") == 0);
 }
 
 int	main(void)
@@ -282,7 +314,7 @@ int	main(void)
 	test_memset();
 	test_bzero();
 	test_memcpy();
-	//test_memmove();
-	//test_strlcpy();
-	//test_strlcat();
+	test_memmove();
+	test_strlcpy();
+	test_strlcat();
 }

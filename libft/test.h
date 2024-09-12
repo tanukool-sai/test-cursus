@@ -30,7 +30,7 @@
 # define COLOR_GREEN   "\x1b[32m"
 # define COLOR_RESET   "\x1b[0m"
 
-# define ASSERT(test) do { \
+# define ASSERT(test) { \
 	if (test) { \
 		if (DEBUG) { \
 			printf(COLOR_GREEN "PASSED: %s" COLOR_RESET "\n", #test); \
@@ -38,6 +38,6 @@
 	} else { \
 		dprintf(2, COLOR_RED "FAILED: %s" COLOR_RESET "\n", #test); \
 	} \
-} while (0)
+}
 
 #endif
