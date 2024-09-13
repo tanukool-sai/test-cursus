@@ -20,6 +20,15 @@
 #  define ft_memmove memmove
 #  define ft_strlcpy strlcpy
 #  define ft_strlcat strlcat
+#  define ft_toupper toupper
+#  define ft_tolower tolower 
+#  define ft_strchr strchr 
+#  define ft_strrchr strrchr 
+#  define ft_strncmp strncmp
+#  define ft_memchr memchr
+#  define ft_memcmp memcmp
+#  define ft_strnstr strnstr
+#  define ft_atoi atoi
 # endif
 
 # ifndef DEBUG

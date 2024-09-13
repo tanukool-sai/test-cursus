@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "test.h"
 
 char	s[50];
@@ -303,6 +304,184 @@ void	test_strlcat(void)
 	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 8) == 7 && strcmp(s, "abc1234") == 0);
 }
 
+void	test_toupper()
+{
+	printf("TEST: toupper\n");
+	// Input: lowercase 
+	ASSERT(ft_toupper('a') == 'A');
+	ASSERT(ft_toupper('b') == 'B');
+	ASSERT(ft_toupper('c') == 'C');
+	ASSERT(ft_toupper('d') == 'D');
+	ASSERT(ft_toupper('e') == 'E');
+	ASSERT(ft_toupper('f') == 'F');
+	ASSERT(ft_toupper('m') == 'M');
+	ASSERT(ft_toupper('n') == 'N');
+	ASSERT(ft_toupper('q') == 'Q');
+	ASSERT(ft_toupper('z') == 'Z');
+
+	// Input: uppercase
+	ASSERT(ft_toupper('A') == 'A');
+	ASSERT(ft_toupper('B') == 'B');
+	ASSERT(ft_toupper('C') == 'C');
+	ASSERT(ft_toupper('D') == 'D');
+	ASSERT(ft_toupper('E') == 'E');
+	ASSERT(ft_toupper('F') == 'F');
+	ASSERT(ft_toupper('M') == 'M');
+	ASSERT(ft_toupper('N') == 'N');
+	ASSERT(ft_toupper('Q') == 'Q');
+	ASSERT(ft_toupper('Z') == 'Z');
+
+	// Input: special character
+	ASSERT(ft_toupper('0') == '0');
+	ASSERT(ft_toupper('1') == '1');
+	ASSERT(ft_toupper('2') == '2');
+	ASSERT(ft_toupper('3') == '3');
+	ASSERT(ft_toupper('4') == '4');
+	ASSERT(ft_toupper('5') == '5');
+	ASSERT(ft_toupper('6') == '6');
+	ASSERT(ft_toupper('7') == '7');
+	ASSERT(ft_toupper('8') == '8');
+	ASSERT(ft_toupper('9') == '9');
+	ASSERT(ft_toupper(' ') == ' ');
+	ASSERT(ft_toupper('\0') == '\0');
+	ASSERT(ft_toupper('\x12') == '\x12');
+	ASSERT(ft_toupper('\t') == '\t');
+	ASSERT(ft_toupper('~') == '~');
+	ASSERT(ft_toupper('!') == '!');
+	ASSERT(ft_toupper('\x01') == '\x01');
+	ASSERT(ft_toupper('\x02') == '\x02');
+	ASSERT(ft_toupper('"') == '"');
+	ASSERT(ft_toupper('#') == '#');
+	ASSERT(ft_toupper('$') == '$');
+	ASSERT(ft_toupper('%') == '%');
+	ASSERT(ft_toupper('*') == '*');
+	ASSERT(ft_toupper('+') == '+');
+}
+
+void	test_tolower()
+{
+	printf("TEST: tolower\n");
+	// Input: lowercase 
+	ASSERT(ft_tolower('a') == 'a');
+	ASSERT(ft_tolower('b') == 'b');
+	ASSERT(ft_tolower('c') == 'c');
+	ASSERT(ft_tolower('d') == 'd');
+	ASSERT(ft_tolower('e') == 'e');
+	ASSERT(ft_tolower('f') == 'f');
+	ASSERT(ft_tolower('m') == 'm');
+	ASSERT(ft_tolower('n') == 'n');
+	ASSERT(ft_tolower('q') == 'q');
+	ASSERT(ft_tolower('z') == 'z');
+
+	// Input: uppercase
+	ASSERT(ft_tolower('A') == 'a');
+	ASSERT(ft_tolower('B') == 'b');
+	ASSERT(ft_tolower('C') == 'c');
+	ASSERT(ft_tolower('D') == 'd');
+	ASSERT(ft_tolower('E') == 'e');
+	ASSERT(ft_tolower('F') == 'f');
+	ASSERT(ft_tolower('M') == 'm');
+	ASSERT(ft_tolower('N') == 'n');
+	ASSERT(ft_tolower('Q') == 'q');
+	ASSERT(ft_tolower('Z') == 'z');
+
+	// Input: special character
+	ASSERT(ft_tolower('0') == '0');
+	ASSERT(ft_tolower('1') == '1');
+	ASSERT(ft_tolower('2') == '2');
+	ASSERT(ft_tolower('3') == '3');
+	ASSERT(ft_tolower('4') == '4');
+	ASSERT(ft_tolower('5') == '5');
+	ASSERT(ft_tolower('6') == '6');
+	ASSERT(ft_tolower('7') == '7');
+	ASSERT(ft_tolower('8') == '8');
+	ASSERT(ft_tolower('9') == '9');
+	ASSERT(ft_tolower(' ') == ' ');
+	ASSERT(ft_tolower('\0') == '\0');
+	ASSERT(ft_tolower('\x12') == '\x12');
+	ASSERT(ft_tolower('\t') == '\t');
+	ASSERT(ft_tolower('~') == '~');
+	ASSERT(ft_tolower('!') == '!');
+	ASSERT(ft_tolower('\x01') == '\x01');
+	ASSERT(ft_tolower('\x02') == '\x02');
+	ASSERT(ft_tolower('"') == '"');
+	ASSERT(ft_tolower('#') == '#');
+	ASSERT(ft_tolower('$') == '$');
+	ASSERT(ft_tolower('%') == '%');
+	ASSERT(ft_tolower('*') == '*');
+	ASSERT(ft_tolower('+') == '+');
+}
+void	test_strchr()
+{
+	printf("TEST: strchr\n");
+	ASSERT(ft_strchr(strcpy(s, ""), '\0') == s);
+	ASSERT(ft_strchr(strcpy(s, ""), ' ') == 0);
+	ASSERT(ft_strchr(strcpy(s, ""), '\x12') == 0);
+	ASSERT(ft_strchr(strcpy(s, ""), -123) == 0);
+	ASSERT(ft_strchr(strcpy(s, ""), -1) == 0);
+
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), 'a') == s);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), 'b') == &s[1]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), 'c') == &s[2]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), ' ') == &s[3]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), '\x12') == &s[4]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), '\t') == &s[5]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), '\0') == &s[6]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), -123) == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), -23) == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), -1) == 0);
+
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), 'a') == s);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), 'b') == &s[1]);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), 'c') == &s[2]);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), '\0') == &s[3]);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), ' ') == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), '\x12') == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), '\t') == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), -123) == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), -23) == 0);
+	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), -1) == 0);
+}
+
+void	test_strrchr()
+{
+	printf("TEST: strrchr\n");
+	ASSERT(ft_strrchr(strcpy(s, ""), '\0') == s);
+	ASSERT(ft_strrchr(strcpy(s, ""), ' ') == 0);
+	ASSERT(ft_strrchr(strcpy(s, ""), '\x12') == 0);
+	ASSERT(ft_strrchr(strcpy(s, ""), -123) == 0);
+	ASSERT(ft_strrchr(strcpy(s, ""), -1) == 0);
+
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), '\0') == &s[strlen(s)]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), 'a') == &s[strlen(s) - 1]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), 'b') == &s[strlen(s) - 2]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), 'c') == &s[strlen(s) - 3]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), ' ') == &s[strlen(s) - 4]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), '\x12') == &s[strlen(s) - 5]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t\x12 cba"), '\t') == &s[strlen(s) - 6]);
+
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), 'a') == s);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), 'b') == &s[1]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), 'c') == &s[2]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), ' ') == &s[3]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), '\x12') == &s[4]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), '\t') == &s[5]);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), -123) == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), -23) == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc \x12\t"), -1) == 0);
+
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), 'a') == s);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), 'b') == &s[1]);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), 'c') == &s[2]);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), '\0') == &s[3]);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), ' ') == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), '\x12') == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), '\t') == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), -123) == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), -23) == 0);
+	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), -1) == 0);
+}
+
 int	main(void)
 {
 	test_isalpha();
@@ -317,4 +496,8 @@ int	main(void)
 	test_memmove();
 	test_strlcpy();
 	test_strlcat();
+	test_toupper();
+	test_tolower();
+	test_strchr();
+	test_strrchr();
 }
