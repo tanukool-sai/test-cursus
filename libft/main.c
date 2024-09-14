@@ -617,6 +617,11 @@ void	test_memchr(void)
 	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 7) == &s[5]);
 }
 
+void	test_memcmp(void)
+{
+	print_test_name(__func__);
+}
+
 int	main(void)
 {
 	test_isalpha();
