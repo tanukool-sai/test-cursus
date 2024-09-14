@@ -5,6 +5,10 @@
 # include <stdio.h>
 # include <string.h>
 
+# ifdef __linux__
+#  include <bsd/string.h>
+# endif
+
 # include "libft.h"
 
 # ifdef LIBC

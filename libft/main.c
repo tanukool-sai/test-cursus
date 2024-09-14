@@ -234,9 +234,13 @@ void	test_memset(void)
 void	test_bzero(void)
 {
 	print_test_name(__func__);
-	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 0), s), "abc", 3) == 0);
 	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 3), s), "\0\0\0", 3) == 0);
 	ASSERT(memcmp((strcpy(s, "abcde"), ft_bzero(s, 3), s), "\0\0\0de", 5) == 0);
+
+	// error: 'size' argument to bzero is '0' [-Werror,-Wsuspicious-bzero]
+	#ifndef LIBC
+		ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 0), s), "abc", 3) == 0);
+	#endif
 }
 
 void	test_memcpy(void)
@@ -246,6 +250,11 @@ void	test_memcpy(void)
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 1), "1bc", 3) == 0);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 2), "12c", 3) == 0);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 3), "123", 3) == 0);
+
+	// bzero size cannot be 0, get warning memset-transposed-args
+	#ifndef LIBC
+		ASSERT(strncmp(ft_memset(strcpy(s, "abcde"), 'a', 0), "abcde", 5) == 0);
+	#endif
 }
 
 void	test_memmove(void)

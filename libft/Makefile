@@ -1,7 +1,10 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I. -L.
+
 LIB_FLAGS = -lft
-#LIB_FLAGS = -lft -lbsd
+ifeq ($(shell uname), Linux)
+	LIB_FLAGS += -lbsd
+endif
 
 all:
 	$(CC) $(CFLAGS) main.c $(LIB_FLAGS) -o main
