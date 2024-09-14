@@ -756,6 +756,73 @@ void	test_atoi(void)
 {
 	print_test_name(__func__);
 	ASSERT(ft_atoi("") == 0);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f") == 0);
+	ASSERT(ft_atoi(" \t\n\v\f\r\r   \t\n   \r    \f+") == 0);
+	ASSERT(ft_atoi(" \t\n\v\f\r\r   \t\n   \r    \f-") == 0);
+	ASSERT(ft_atoi(" \t\n\v\f\r\r   \t\n   \r    \f++++---+-") == 0);
+	ASSERT(ft_atoi("+--++---+++") == 0);
+	ASSERT(ft_atoi("abcde%/*1234") == 0);
+
+	ASSERT(ft_atoi("0") == 0);
+	ASSERT(ft_atoi("1") == 1);
+	ASSERT(ft_atoi("2") == 2);
+	ASSERT(ft_atoi("3") == 3);
+
+	ASSERT(ft_atoi("+0") == 0);
+	ASSERT(ft_atoi("+1") == 1);
+	ASSERT(ft_atoi("+2") == 2);
+	ASSERT(ft_atoi("+3") == 3);
+
+	ASSERT(ft_atoi("-0") == 0);
+	ASSERT(ft_atoi("-1") == -1);
+	ASSERT(ft_atoi("-2") == -2);
+	ASSERT(ft_atoi("-3") == -3);
+
+	ASSERT(ft_atoi("-+0") == 0);
+	ASSERT(ft_atoi("-+1") == 0);
+	ASSERT(ft_atoi("--2") == 0);
+	ASSERT(ft_atoi("-+-3") == 0);
+
+	ASSERT(ft_atoi("+0") == 0);
+	ASSERT(ft_atoi("+1") == 1);
+	ASSERT(ft_atoi("+2") == 2);
+	ASSERT(ft_atoi("+3") == 3);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+0") == 0);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+1") == 1);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+2") == 2);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+3") == 3);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-0") == 0);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-1") == -1);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-2") == -2);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-3") == -3);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+11324") == 11324);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+215521234") == 215521234);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f+31424") == 31424);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-11324") == -11324);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-215521234") == -215521234);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n   \r    \f-31424") == -31424);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n53523   \r    \f-11324") == 53523);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n1234   \r    \f-215521234") == 1234);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n0   \r    \f-31424") == 0);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-53523asdf   \r    \f-11324") == -53523);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-1234~   \r    \f-215521234") == -1234);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-00000342542   \r    \f-31424") == -342542);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n+2147483640   \r    \f-31424") == 2147483640);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n+2147483647   \r    \f-31424") == 2147483647);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n+2147483648   \r    \f-31424") == -2147483648);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n+2147483649   \r    \f-31424") == -2147483647);
+
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-2147483640   \r    \f-31424") == -2147483640);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-2147483647   \r    \f-31424") == -2147483647);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-2147483648   \r    \f-31424") == -2147483648);
+	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-2147483649   \r    \f-31424") == 2147483647);
 }
 
 int	main(void)
