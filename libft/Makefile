@@ -22,6 +22,6 @@ debug:
 	@rm -f main
 
 mem:
-	$(CC) $(CFLAGS) -D DEBUG=1 main.c $(LIB_FLAGS) -o main
+	$(CC) $(CFLAGS) main.c $(LIB_FLAGS) -o main
 	@-valgrind --leak-check=full ./main
 	@rm -f main
