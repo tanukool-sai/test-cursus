@@ -3,9 +3,14 @@
 
 char	s[50];
 
+void	print_test_name(const char *func_name)
+{
+	printf("TEST: %s\n", func_name + 5); // + 5 to trimmed test_ prefix
+}
+
 void	test_isalpha(void)
 {
-	printf("TEST: isalpha\n");
+	print_test_name(__func__);
 	// True
 	ASSERT(ft_isalpha('a') != 0);
 	ASSERT(ft_isalpha('b') != 0);
@@ -35,7 +40,7 @@ void	test_isalpha(void)
 
 void	test_isdigit(void)
 {
-	printf("TEST: isdigit\n");
+	print_test_name(__func__);
 	// True
 	ASSERT(ft_isdigit('0') != 0);
 	ASSERT(ft_isdigit('1') != 0);
@@ -76,7 +81,7 @@ void	test_isdigit(void)
 
 void	test_isalnum(void)
 {
-	printf("TEST: isalnum\n");
+	print_test_name(__func__);
 	// True
 	ASSERT(ft_isalnum('0') != 0);
 	ASSERT(ft_isalnum('1') != 0);
@@ -117,7 +122,7 @@ void	test_isalnum(void)
 
 void	test_isascii(void)
 {
-	printf("TEST: isascii\n");
+	print_test_name(__func__);
 	// True
 	ASSERT(ft_isascii('0') != 0);
 	ASSERT(ft_isascii('1') != 0);
@@ -162,7 +167,7 @@ void	test_isascii(void)
 
 void	test_isprint(void)
 {
-	printf("TEST: isprint\n");
+	print_test_name(__func__);
 	// True
 	ASSERT(ft_isprint('0') != 0);
 	ASSERT(ft_isprint('1') != 0);
@@ -203,7 +208,7 @@ void	test_isprint(void)
 
 void	test_strlen(void)
 {
-	printf("TEST: strlen\n");
+	print_test_name(__func__);
 	ASSERT(ft_strlen("") == 0);
 	ASSERT(ft_strlen("h") == 1);
 	ASSERT(ft_strlen("hello") == 5);
@@ -213,7 +218,7 @@ void	test_strlen(void)
 
 void	test_memset(void)
 {
-	printf("TEST: memset\n");
+	print_test_name(__func__);
 	ASSERT(memcmp(ft_memset(strcpy(s, "abc"), 'a', 3), "aaa", 3) == 0);
 	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 3), "aaade", 5) == 0);
 	ASSERT(memcmp(ft_memset(strcpy(s, "abcde"), 'a', 1), "abcde", 5) == 0);
@@ -228,7 +233,7 @@ void	test_memset(void)
 
 void	test_bzero(void)
 {
-	printf("TEST: bzero\n");
+	print_test_name(__func__);
 	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 0), s), "abc", 3) == 0);
 	ASSERT(memcmp((strcpy(s, "abc"), ft_bzero(s, 3), s), "\0\0\0", 3) == 0);
 	ASSERT(memcmp((strcpy(s, "abcde"), ft_bzero(s, 3), s), "\0\0\0de", 5) == 0);
@@ -236,7 +241,7 @@ void	test_bzero(void)
 
 void	test_memcpy(void)
 {
-	printf("TEST: memcpy\n");
+	print_test_name(__func__);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 0), "abc", 3) == 0);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 1), "1bc", 3) == 0);
 	ASSERT(memcmp(ft_memcpy(strcpy(s, "abc"), "123", 2), "12c", 3) == 0);
@@ -245,7 +250,7 @@ void	test_memcpy(void)
 
 void	test_memmove(void)
 {
-	printf("TEST: memmove\n");
+	print_test_name(__func__);
 	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde"), s + 2, 0), "abcde", 5) == 0);
 	ASSERT(memcmp(ft_memmove(strcpy(s, "abcde") + 2, s, 0) - 2, "abcde", 5) == 0);
 
@@ -261,7 +266,7 @@ void	test_memmove(void)
 
 void	test_strlcpy(void)
 {
-	printf("TEST: strlcpy\n");
+	print_test_name(__func__);
 	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 0) == 0 && memcmp(s, "abc", 4) == 0);
 	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 1) == 0 && memcmp(s, "\0bc", 4) == 0);
 	ASSERT(ft_strlcpy(strcpy(s, "abc"), "", 2) == 0 && memcmp(s, "\0bc", 4) == 0);
@@ -277,7 +282,7 @@ void	test_strlcpy(void)
 
 void	test_strlcat(void)
 {
-	printf("TEST: strlcat\n");
+	print_test_name(__func__);
 	ASSERT(ft_strlcat(strcpy(s, ""), "", 0) == 0 && strcmp(s, "") == 0);
 	ASSERT(ft_strlcat(strcpy(s, ""), "", 1) == 0 && strcmp(s, "") == 0);
 	ASSERT(ft_strlcat(strcpy(s, ""), "", 2) == 0 && strcmp(s, "") == 0);
@@ -304,9 +309,9 @@ void	test_strlcat(void)
 	ASSERT(ft_strlcat(strcpy(s, "abc"), "1234", 8) == 7 && strcmp(s, "abc1234") == 0);
 }
 
-void	test_toupper()
+void	test_toupper(void)
 {
-	printf("TEST: toupper\n");
+	print_test_name(__func__);
 	// Input: lowercase 
 	ASSERT(ft_toupper('a') == 'A');
 	ASSERT(ft_toupper('b') == 'B');
@@ -358,9 +363,9 @@ void	test_toupper()
 	ASSERT(ft_toupper('+') == '+');
 }
 
-void	test_tolower()
+void	test_tolower(void)
 {
-	printf("TEST: tolower\n");
+	print_test_name(__func__);
 	// Input: lowercase 
 	ASSERT(ft_tolower('a') == 'a');
 	ASSERT(ft_tolower('b') == 'b');
@@ -411,14 +416,23 @@ void	test_tolower()
 	ASSERT(ft_tolower('*') == '*');
 	ASSERT(ft_tolower('+') == '+');
 }
-void	test_strchr()
+
+void	test_strchr(void)
 {
-	printf("TEST: strchr\n");
+	print_test_name(__func__);
 	ASSERT(ft_strchr(strcpy(s, ""), '\0') == s);
 	ASSERT(ft_strchr(strcpy(s, ""), ' ') == 0);
 	ASSERT(ft_strchr(strcpy(s, ""), '\x12') == 0);
 	ASSERT(ft_strchr(strcpy(s, ""), -123) == 0);
 	ASSERT(ft_strchr(strcpy(s, ""), -1) == 0);
+
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), 'a') == s);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), 'b') == &s[1]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), 'c') == &s[2]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), ' ') == &s[3]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), '\x12') == &s[4]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), '\t') == &s[5]);
+	ASSERT(ft_strchr(strcpy(s, "abc \x12\t\x12 cba"), '\0') == &s[strlen(s)]);
 
 	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), 'a') == s);
 	ASSERT(ft_strchr(strcpy(s, "abc \x12\t"), 'b') == &s[1]);
@@ -443,9 +457,9 @@ void	test_strchr()
 	ASSERT(ft_strchr(strcpy(s, "abc\0\x12\t"), -1) == 0);
 }
 
-void	test_strrchr()
+void	test_strrchr(void)
 {
-	printf("TEST: strrchr\n");
+	print_test_name(__func__);
 	ASSERT(ft_strrchr(strcpy(s, ""), '\0') == s);
 	ASSERT(ft_strrchr(strcpy(s, ""), ' ') == 0);
 	ASSERT(ft_strrchr(strcpy(s, ""), '\x12') == 0);
@@ -482,6 +496,127 @@ void	test_strrchr()
 	ASSERT(ft_strrchr(strcpy(s, "abc\0\x12\t"), -1) == 0);
 }
 
+void	test_strncmp(void)
+{
+	print_test_name(__func__);
+	ASSERT(ft_strncmp("", "", 0) == 0);
+	ASSERT(ft_strncmp("", "", 1) == 0);
+	ASSERT(ft_strncmp("", "", 2) == 0);
+	ASSERT(ft_strncmp("", "", 3) == 0);
+
+	ASSERT(ft_strncmp("", "a", 0) == 0);
+	ASSERT(ft_strncmp("", "a", 1) < 0);
+	ASSERT(ft_strncmp("", "a", 2) < 0);
+
+	ASSERT(ft_strncmp("", "a", 0) == 0);
+	ASSERT(ft_strncmp("", "a", 1) < 0);
+	ASSERT(ft_strncmp("", "a", 2) < 0);
+	ASSERT(ft_strncmp("", "aaa", 0) == 0);
+	ASSERT(ft_strncmp("", "aaa", 1) < 0);
+	ASSERT(ft_strncmp("", "aaa", 2) < 0);
+	ASSERT(ft_strncmp("", "aaa", 3) < 0);
+	ASSERT(ft_strncmp("", "aaa", 4) < 0);
+	ASSERT(ft_strncmp("", "aaa", 5) < 0);
+	ASSERT(ft_strncmp("", "abc", 0) == 0);
+	ASSERT(ft_strncmp("", "abc", 1) < 0);
+	ASSERT(ft_strncmp("", "abc", 2) < 0);
+	ASSERT(ft_strncmp("", "abc", 3) < 0);
+	ASSERT(ft_strncmp("", "abc", 4) < 0);
+	ASSERT(ft_strncmp("", "abc", 5) < 0);
+
+	ASSERT(ft_strncmp("a", "", 0) == 0);
+	ASSERT(ft_strncmp("a", "", 1) > 0);
+	ASSERT(ft_strncmp("a", "", 2) > 0);
+	ASSERT(ft_strncmp("aaa", "", 0) == 0);
+	ASSERT(ft_strncmp("aaa", "", 1) > 0);
+	ASSERT(ft_strncmp("aaa", "", 2) > 0);
+	ASSERT(ft_strncmp("aaa", "", 3) > 0);
+	ASSERT(ft_strncmp("aaa", "", 4) > 0);
+	ASSERT(ft_strncmp("aaa", "", 5) > 0);
+	ASSERT(ft_strncmp("abc", "", 0) == 0);
+	ASSERT(ft_strncmp("abc", "", 1) > 0);
+	ASSERT(ft_strncmp("abc", "", 2) > 0);
+	ASSERT(ft_strncmp("abc", "", 3) > 0);
+	ASSERT(ft_strncmp("abc", "", 4) > 0);
+	ASSERT(ft_strncmp("abc", "", 5) > 0);
+
+	ASSERT(ft_strncmp("a", "a", 0) == 0);
+	ASSERT(ft_strncmp("a", "a", 1) == 0);
+	ASSERT(ft_strncmp("a", "a", 2) == 0);
+	ASSERT(ft_strncmp("a", "a", 3) == 0);
+	ASSERT(ft_strncmp("a", "aaa", 0) == 0);
+	ASSERT(ft_strncmp("a", "aaa", 1) == 0);
+	ASSERT(ft_strncmp("a", "aaa", 2) < 0);
+	ASSERT(ft_strncmp("a", "aaa", 3) < 0);
+	ASSERT(ft_strncmp("a", "aaa", 4) < 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 0) == 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 1) == 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 2) == 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 3) == 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 4) > 0);
+	ASSERT(ft_strncmp("aaaa", "aaa", 5) > 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 0) == 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 1) == 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 2) == 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 3) == 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 4) < 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 5) < 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 6) < 0);
+	ASSERT(ft_strncmp("abcde", "abcxz", 7) < 0);
+
+	ASSERT(ft_strncmp("\x01", "\xff", 1) < 0);
+	ASSERT(ft_strncmp("\xae", "\x12", 1) > 0);
+	ASSERT(ft_strncmp("\xae", "\xef", 1) < 0);
+
+	ASSERT(ft_strncmp("aaa\0abc", "aaa\0xyz", 7) == 0);
+}
+
+void	test_memchr(void)
+{
+	print_test_name(__func__);
+	ASSERT(ft_memchr(strcpy(s, ""), '\0', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, ""), '\0', 1) == s);
+	ASSERT(ft_memchr(strcpy(s, ""), 'a', 1) == 0);
+
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'a', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'a', 1) == s);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'a', 2) == s);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'a', 3) == s);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'b', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'b', 1) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'b', 2) == &s[1]);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'b', 3) == &s[1]);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'c', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'c', 1) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'c', 2) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'c', 3) == &s[2]);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 1) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 2) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 3) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 4) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 5) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), '\0', 6) == &s[5]);
+
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 1) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 2) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 3) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 4) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 5) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde\0"), 'k', 6) == 0);
+
+	// 32800 = 1000000000100000 (binary) = 100000 (truncated) = 32 
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 0) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 1) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 2) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 3) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 4) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 5) == 0);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 6) == &s[5]);
+	ASSERT(ft_memchr(strcpy(s, "abcde \0"), 32800, 7) == &s[5]);
+}
+
 int	main(void)
 {
 	test_isalpha();
@@ -500,4 +635,6 @@ int	main(void)
 	test_tolower();
 	test_strchr();
 	test_strrchr();
+	test_strncmp();
+	test_memchr();
 }
