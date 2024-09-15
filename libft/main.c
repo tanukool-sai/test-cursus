@@ -8,6 +8,41 @@ void	print_test_name(const char *func_name)
 	printf("TEST: %s\n", func_name + 5); // + 5 to trimmed test_ prefix
 }
 
+void	init_malloc_number()
+{
+	malloc_time = INT_MAX;
+}
+
+void	free_split(char	**strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+		free(strs[i++]);
+	free(strs);
+}
+
+void	print_split(char **strs)
+{
+	while (*strs)
+		printf("\"%s\"\n", *strs++);
+}
+
+int	splitcmp(char **strs1, char **strs2)
+{
+	int	i;
+
+	i = 0;
+	while (strs1[i] && strs2[i])
+	{
+		if (strcmp(strs1[i], strs1[i]) != 0)
+			return (0);
+		i++;
+	}
+	return (strs1[i] == strs2[i]);
+}
+
 void	test_isalpha(void)
 {
 	print_test_name(__func__);
@@ -827,6 +862,305 @@ void	test_atoi(void)
 
 void	test_calloc(void)
 {
+	print_test_name(__func__);
+
+	void	*p = NULL;
+	void	*p2 = NULL;
+
+	init_malloc_number();
+	ASSERT((p = ft_calloc(0, 0)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(1234, 0)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(0, 235345)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(INT_MAX, 0)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(0, INT_MAX)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(SIZE_MAX, 0)) == NULL);
+	free(p);
+	ASSERT((p = ft_calloc(0, SIZE_MAX)) == NULL);
+	free(p);
+
+	ASSERT((p = ft_calloc(1, 1)) != NULL && memcmp(p, "", 1) == 0);
+	free(p);
+	ASSERT((p = ft_calloc(123, 456)) != NULL && memcmp(p, (p2 = calloc(123, 456)), 123 * 456) == 0);
+	free(p);
+	free(p2);
+
+	ASSERT((p = ft_calloc(2, SIZE_MAX)) == NULL);
+	ASSERT((p = ft_calloc(SIZE_MAX, 3)) == NULL);
+	ASSERT((p = ft_calloc(SIZE_MAX, SIZE_MAX)) == NULL);
+}
+
+void	test_strdup(void)
+{
+	print_test_name(__func__);
+
+	char	*p;
+
+	init_malloc_number();
+
+	ASSERT(strcmp((p = ft_strdup("")), "") == 0);
+	free(p);
+	ASSERT(strcmp((p = ft_strdup("abcdefg")), "abcdefg") == 0);
+	free(p);
+	ASSERT(strcmp((p = ft_strdup("abc\0defg")), "abc") == 0);
+	free(p);
+
+	ASSERT((malloc_time = 0, 1) && ft_strdup("abc\0") == NULL);
+}
+
+void	test_substr(void)
+{
+	print_test_name(__func__);
+
+	char *p;
+
+	init_malloc_number();
+
+	ASSERT((p = ft_substr("", 0, 0)) != NULL && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_substr("a", 0, 0)) != NULL && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_substr("a", 0, 1)) != NULL && strcmp(p, "a") == 0);
+	free(p);
+	ASSERT((p = ft_substr("a", 0, 2)) != NULL && strcmp(p, "a") == 0);
+	free(p);
+	ASSERT((p = ft_substr("a", 1, 0)) != NULL && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_substr("a", 1, 1)) != NULL && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_substr("a", 1, 2)) != NULL && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 0)) != NULL && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 1)) != NULL && strcmp(p, "a") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 2)) != NULL && strcmp(p, "ab") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 3)) != NULL && strcmp(p, "abc") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 4)) != NULL && strcmp(p, "abcd") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 5)) != NULL && strcmp(p, "abcde") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 11)) != NULL && strcmp(p, "abcdefghijk") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 12)) != NULL && strcmp(p, "abcdefghijkl") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 0, 13)) != NULL && strcmp(p, "abcdefghijkl") == 0);
+	free(p);
+
+	ASSERT((p = ft_substr("abcdefghijkl", 1, 0)) != NULL && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 2, 1)) != NULL && strcmp(p, "c") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 3, 2)) != NULL && strcmp(p, "de") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 4, 3)) != NULL && strcmp(p, "efg") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 5, 4)) != NULL && strcmp(p, "fghi") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 6, 5)) != NULL && strcmp(p, "ghijk") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 7, 11)) != NULL && strcmp(p, "hijkl") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 8, 12)) != NULL && strcmp(p, "ijkl") == 0);
+	free(p);
+	ASSERT((p = ft_substr("abcdefghijkl", 9, 13)) != NULL && strcmp(p, "jkl") == 0);
+	free(p);
+
+	malloc_time=0;
+	ASSERT((malloc_time = 0, 1) && (p = ft_substr("abcdefghijkl", 0, 13)) == NULL);
+	ASSERT((malloc_time = 0, 1) && (p = ft_substr("abcdefghijkl", 2, 9)) == NULL);
+	ASSERT((malloc_time = 0, 1) && (p = ft_substr("abcdefghijkl", 100, 9)) == NULL);
+	ASSERT((malloc_time = 0, 1) && (p = ft_substr("", 0, 0)) == NULL);
+}
+
+void	test_strjoin(void)
+{
+	char	*p;
+
+	print_test_name(__func__);
+	init_malloc_number();
+
+	ASSERT((p = ft_strjoin("", "")) && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_strjoin("", "a")) && strcmp(p, "a") == 0);
+	free(p);
+	ASSERT((p = ft_strjoin("", "abcde")) && strcmp(p, "abcde") == 0);
+	free(p);
+
+	ASSERT((p = ft_strjoin("a", "")) && strcmp(p, "a") == 0);
+	free(p);
+	ASSERT((p = ft_strjoin("abcde", "")) && strcmp(p, "abcde") == 0);
+	free(p);
+
+	ASSERT((p = ft_strjoin("abcde", "012346789")) && strcmp(p, "abcde012346789") == 0);
+	free(p);
+	ASSERT((p = ft_strjoin("012346789", "abcde")) && strcmp(p, "012346789abcde") == 0);
+	free(p);
+
+	ASSERT((malloc_time = 0, 1) &&  ft_strjoin("abcde", "012346789") == NULL);
+}
+
+void	test_strtrim(void)
+{
+	char	*p;
+
+	print_test_name(__func__);
+	init_malloc_number();
+
+	ASSERT((p = ft_strtrim("", "")) && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("abcdefgh", "")) && strcmp(p, "abcdefgh") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("   abcdefgh \t\v \r", "")) && strcmp(p, "   abcdefgh \t\v \r") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("", "abcdefgh")) && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("", "   abcdefgh \t\v \r")) && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("abcdefgh", "abcdefgh")) && strcmp(p, "") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("   abcdefgh \t\v \r", "   abcdefgh \t\v \r")) && strcmp(p, "") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("aaabcdefgh", "a")) && strcmp(p, "bcdefgh") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "h")) && strcmp(p, "abcdefg") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "ah")) && strcmp(p, "bcdefg") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("abcdefgh", "abcfgh")) && strcmp(p, "de") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "abcdfgh")) && strcmp(p, "e") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "abcefgh")) && strcmp(p, "d") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "bcefgh")) && strcmp(p, "abcd") == 0);
+	free(p);
+	ASSERT((p = ft_strtrim("abcdefgh", "bcefg")) && strcmp(p, "abcdefgh") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("   \t\t\t\rabcd\t\v\r   \r\refgh \t\v \r", " \t\v\r")) && strcmp(p, "abcd\t\v\r   \r\refgh") == 0);
+	free(p);
+
+	ASSERT((p = ft_strtrim("   \t\t\t\rabcd\t\v\r   \r\refgh \t\v \r", "abcdefgh")) && strcmp(p, "   \t\t\t\rabcd\t\v\r   \r\refgh \t\v \r") == 0);
+	free(p);
+
+	malloc_time = 0;
+	ASSERT(ft_strtrim("abcdefgh", "bcefg") == NULL);
+	ASSERT(ft_strtrim("abcdefgh", "b") == NULL);
+}
+
+void	test_split(void)
+{
+	char	**strs;
+
+	print_test_name(__func__);
+	init_malloc_number();
+
+	ASSERT((strs = ft_split("", ' ')) && splitcmp(strs, (char *[]){0}));
+	free_split(strs);
+
+	ASSERT((strs = ft_split("                    ", ' ')) && splitcmp(strs, (char *[]){0}));
+	free_split(strs);
+
+	ASSERT((strs = ft_split("a", ' ')) && splitcmp(strs, (char *[]){"a", 0}));
+	free_split(strs);
+	ASSERT((strs = ft_split("abcdefghijkl", ' ')) && splitcmp(strs, (char *[]){"abcdefghijkl", 0}));
+	free_split(strs);
+	ASSERT((strs = ft_split("abcdefghijkl", '\0')) && splitcmp(strs, (char *[]){"abcdefghijkl", 0}));
+	free_split(strs);
+
+	ASSERT((strs = ft_split("     a    ", ' ')) && splitcmp(strs, (char *[]){"a", 0}));
+	free_split(strs);
+	ASSERT((strs = ft_split("     a    b \t  TT   ", '\t')) && splitcmp(strs, (char *[]){"     a    b ", "  TT   ", 0}));
+	free_split(strs);
+
+	ASSERT((strs = ft_split("Je suis un cheval", ' ')) && splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+	ASSERT((strs = ft_split("       Je   suis     un    cheval           ", ' ')) && splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+
+	// Test failed malloc
+	ASSERT((malloc_time = 0, 1) && ft_split("Je suis un cheval", ' ') == NULL);
+	ASSERT((malloc_time = 0, 1) && ft_split("       Je   suis     un    cheval           ", ' ') == NULL);
+
+	ASSERT((malloc_time = 1) && (ft_split("Je suis un cheval", ' ') == NULL));
+	ASSERT((malloc_time = 1) && (ft_split("       Je   suis     un    cheval           ", ' ') == NULL));
+
+	ASSERT((malloc_time = 2) && (ft_split("Je suis un cheval", ' ') == NULL));
+	ASSERT((malloc_time = 2) && (ft_split("       Je   suis     un    cheval           ", ' ') == NULL));
+
+	ASSERT((malloc_time = 3) && (ft_split("Je suis un cheval", ' ') == NULL));
+	ASSERT((malloc_time = 3) && (ft_split("       Je   suis     un    cheval           ", ' ') == NULL));
+
+	ASSERT((malloc_time = 4) && (ft_split("Je suis un cheval", ' ') == NULL));
+	ASSERT((malloc_time = 4) && (ft_split("       Je   suis     un    cheval           ", ' ') == NULL));
+
+	ASSERT((malloc_time = 5) && (strs = ft_split("Je suis un cheval", ' ')) && \
+			splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+	ASSERT((malloc_time = 5) && (strs = ft_split("       Je   suis     un    cheval           ", ' ')) && \
+			splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+
+	ASSERT((malloc_time = 6) && (strs = ft_split("Je suis un cheval", ' ')) && \
+			splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+	ASSERT((malloc_time = 6) && (strs = ft_split("       Je   suis     un    cheval           ", ' ')) && \
+			splitcmp(strs, (char *[]){"Je", "suis", "un", "cheval", 0}));
+	free_split(strs);
+}
+
+void	test_itoa(void)
+{
+	char	*a;
+
+	print_test_name(__func__);
+	init_malloc_number();
+
+	ASSERT((a = ft_itoa(0)) && strcmp(a, "0") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-1)) && strcmp(a, "-1") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(1)) && strcmp(a, "1") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(5)) && strcmp(a, "5") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-7)) && strcmp(a, "-7") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(1234)) && strcmp(a, "1234") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-1234)) && strcmp(a, "-1234") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(2325245)) && strcmp(a, "2325245") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-123425674)) && strcmp(a, "-123425674") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(2147483646)) && strcmp(a, "2147483646") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(2147483647)) && strcmp(a, "2147483647") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-2147483647)) && strcmp(a, "-2147483647") == 0);
+	free(a);
+	ASSERT((a = ft_itoa(-2147483648)) && strcmp(a, "-2147483648") == 0);
+	free(a);
+
+	malloc_time = 0;
+	ASSERT(ft_itoa(0) == NULL);
+	ASSERT(ft_itoa(-2147483648) == NULL);
 }
 
 int	main(void)
@@ -852,4 +1186,11 @@ int	main(void)
 	test_memcmp();
 	test_strnstr();
 	test_atoi();
+	test_calloc();
+	test_strdup();
+	test_substr();
+	test_strjoin();
+	test_strtrim();
+	test_split();
+	test_itoa();
 }

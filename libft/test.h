@@ -2,9 +2,13 @@
 # define TEST_H
 
 # include <ctype.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <string.h>
+
+# include <bsd/string.h>
 
 # include "libft.h"
 
@@ -32,10 +36,6 @@
 #  define ft_atoi atoi
 # endif
 
-# ifdef MALLOC
-#  define malloc ft_malloc
-# endif
-
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
@@ -54,8 +54,6 @@
 	} \
 }
 
-void	*ft_malloc(size_t size);
-
-int	malloc_time;
+extern int	malloc_time;
 
 #endif
