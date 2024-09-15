@@ -825,6 +825,10 @@ void	test_atoi(void)
 	ASSERT(ft_atoi("\t\n\v\f\r\r   \t\n-2147483649   \r    \f-31424") == 2147483647);
 }
 
+void	test_calloc(void)
+{
+}
+
 int	main(void)
 {
 	test_isalpha();
@@ -848,4 +852,7 @@ int	main(void)
 	test_memcmp();
 	test_strnstr();
 	test_atoi();
+
+	void	*p = malloc(1);
+	free(p);
 }

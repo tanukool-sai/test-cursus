@@ -1,27 +1,28 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I. -L.
 
-LIB_FLAGS = -lft
-ifeq ($(shell uname), Linux)
-	LIB_FLAGS += -lbsd
-endif
+LIB_FLAGS = -H -lft
+
+
+SRC = main.c
+NAME = main
 
 all:
-	$(CC) $(CFLAGS) main.c $(LIB_FLAGS) -o main
-	@-./main
-	@rm -f main
+	$(CC) $(CFLAGS) $(SRC) $(LIB_FLAGS) -o $(NAME)
+	@-./$(NAME)
+	@rm -f $(NAME) 
 
 real:
-	$(CC) $(CFLAGS) -D LIBC main.c $(LIB_FLAGS) -o main
-	@-./main
-	@rm -f main
+	$(CC) $(CFLAGS) -D LIBC $(SRC) $(LIB_FLAGS) -o $(NAME)
+	@-./$(NAME)
+	@rm -f $(NAME)
 
 debug:
-	$(CC) $(CFLAGS) -D DEBUG=1 main.c $(LIB_FLAGS) -o main
-	@-./main
-	@rm -f main
+	$(CC) $(CFLAGS) -D DEBUG=1 $(SRC) $(LIB_FLAGS) -o $(NAME)
+	@-./$(NAME)
+	@rm -f $(NAME)
 
 mem:
-	$(CC) $(CFLAGS) main.c $(LIB_FLAGS) -o main
-	@-valgrind --leak-check=full ./main
-	@rm -f main
+	$(CC) $(CFLAGS) -D MALLOC=10 $(SRC) $(LIB_FLAGS) -o $(NAME)
+	@-valgrind --leak-check=full ./$(NAME)
+	@rm -f $(NAME)

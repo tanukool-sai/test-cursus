@@ -6,10 +6,6 @@
 # include <stdlib.h>
 # include <string.h>
 
-# ifdef __linux__
-#  include <bsd/string.h>
-# endif
-
 # include "libft.h"
 
 # ifdef LIBC
@@ -36,6 +32,10 @@
 #  define ft_atoi atoi
 # endif
 
+# ifdef MALLOC_SUCCESS_RATE
+#  define malloc ft_malloc
+# endif
+
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
@@ -53,5 +53,7 @@
 		dprintf(2, COLOR_RED "FAILED: %s" COLOR_RESET "\n", #test); \
 	} \
 }
+
+void	*ft_malloc(size_t size);
 
 #endif
