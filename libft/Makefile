@@ -1,10 +1,10 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I. -L.
 
-LIB_FLAGS = -H -lft
+LIB_FLAGS = -lft
 
 
-SRC = main.c
+SRC = main.c ft_malloc.c
 NAME = main
 
 all:
@@ -23,6 +23,6 @@ debug:
 	@rm -f $(NAME)
 
 mem:
-	$(CC) $(CFLAGS) -D MALLOC=10 $(SRC) $(LIB_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) -D MALLOC $(SRC) $(LIB_FLAGS) -o $(NAME)
 	@-valgrind --leak-check=full ./$(NAME)
 	@rm -f $(NAME)

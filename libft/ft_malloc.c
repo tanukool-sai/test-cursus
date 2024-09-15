@@ -1,17 +1,14 @@
-#include <time.h>
 #include <stdlib.h>
 
-#ifndef MALLOC_SUCCESS_RATE 
-# define MALLOC_SUCCESS_RATE 10
-#endif
+extern int	malloc_time;
 
 void	*ft_malloc(size_t size)
 {
 	void	*p;
 
-	int r = rand() / RAND_MAX * 10;
-	if (r <= MALLOC_SUCCESS_RATE)
+	if (malloc_time > 0)
 	{
+		malloc_time--;
 		p = malloc(size);
 		return (p);
 	}

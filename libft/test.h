@@ -32,7 +32,7 @@
 #  define ft_atoi atoi
 # endif
 
-# ifdef MALLOC_SUCCESS_RATE
+# ifdef MALLOC
 #  define malloc ft_malloc
 # endif
 
@@ -55,5 +55,7 @@
 }
 
 void	*ft_malloc(size_t size);
+
+int	malloc_time;
 
 #endif

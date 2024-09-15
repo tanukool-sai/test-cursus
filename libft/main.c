@@ -852,7 +852,4 @@ int	main(void)
 	test_memcmp();
 	test_strnstr();
 	test_atoi();
-
-	void	*p = malloc(1);
-	free(p);
 }
