@@ -868,19 +868,20 @@ void	test_calloc(void)
 	void	*p2 = NULL;
 
 	init_malloc_number();
-	ASSERT((p = ft_calloc(0, 0)) == NULL);
+	// Moulinette check these, but it is implementation define
+	ASSERT((p = ft_calloc(0, 0)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(1234, 0)) == NULL);
+	ASSERT((p = ft_calloc(1234, 0)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(0, 235345)) == NULL);
+	ASSERT((p = ft_calloc(0, 235345)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(INT_MAX, 0)) == NULL);
+	ASSERT((p = ft_calloc(INT_MAX, 0)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(0, INT_MAX)) == NULL);
+	ASSERT((p = ft_calloc(0, INT_MAX)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(SIZE_MAX, 0)) == NULL);
+	ASSERT((p = ft_calloc(SIZE_MAX, 0)) != NULL);
 	free(p);
-	ASSERT((p = ft_calloc(0, SIZE_MAX)) == NULL);
+	ASSERT((p = ft_calloc(0, SIZE_MAX)) != NULL);
 	free(p);
 
 	ASSERT((p = ft_calloc(1, 1)) != NULL && memcmp(p, "", 1) == 0);
