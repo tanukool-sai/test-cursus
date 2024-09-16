@@ -20,7 +20,10 @@ run-mem:
 ft_malloc.so:
 	cc -shared -o ft_malloc.so -fPIC ft_malloc.c
 
-fclean:
+clean:
+	@rm -f ft_malloc.so
+
+fclean: clean
 	@rm -f $(NAME) 
 
 #real:
